@@ -3,11 +3,18 @@
 
 using namespace std;
 
+struct processes
+{
+public: 
+	int id, arrivTime, lifeTime, memPieces, totalMem;
+	
+};
+
 int main()
 {
     int memorySize = 0, pageSize = 0;
-    int pageSizeChoice, definedProcesses;
-    int[][] processCharacteristics;  // reading from
+    int pageSizeChoice, processAmt;
+    int tempInt = 0;
 
     string workloadFilename;
 
@@ -30,10 +37,25 @@ int main()
     {
         // TODO
         //First Integer in the file is the Number of defined Processes
-    	inFile >> definedProcesses;
-    	int processCharacteristics[definedProcesses][3];
+    	inFile >> processAmt;
 
+    	// Create an array to store all processes information
+    	processes process[processAmt];
 
+    	for(int i = 0; i < processAmt; i++)
+    	{
+    		inFile >> process[i].id >> process[i].arrivTime >> process[i].lifeTime >>process[i].memPieces;
+    		process[i].totalMem = 0;
+    		for (int j = 0; j < process[i].memPieces; j++)
+    		{
+    			tempInt = 0;
+    			inFile >> tempInt;
+    			process[i].totalMem += tempInt;
+    		}
+    		cout << process[i].totalMem << endl;
+    	}
+    	
+    	
 
         inFile.close();
     }
@@ -45,3 +67,4 @@ int main()
 
     return 0;
 }
+
