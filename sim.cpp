@@ -6,7 +6,9 @@ using namespace std;
 int main()
 {
     int memorySize = 0, pageSize = 0;
-    int pageSizeChoice;
+    int pageSizeChoice, definedProcesses;
+    int[][] processCharacteristics;  // reading from
+
     string workloadFilename;
 
     cout << "Enter memory size (Kbytes): ";
@@ -27,6 +29,12 @@ int main()
     if (inFile.is_open())
     {
         // TODO
+        //First Integer in the file is the Number of defined Processes
+    	inFile >> definedProcesses;
+    	int processCharacteristics[definedProcesses][3];
+
+
+
         inFile.close();
     }
     else
