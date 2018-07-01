@@ -30,6 +30,7 @@ class MemoryClass
 	MemoryClass()
 	{
 		turnaroundTime = 0;
+		processCompleted = 0;
 	}
 
 	
@@ -106,6 +107,7 @@ class MemoryClass
 			}
 		}
 		turnaroundTime += currTime;
+		processCompleted++;
 	}
 
 	void printMemoryMap()
@@ -196,6 +198,11 @@ class MemoryClass
 		return turnaroundTime;
 	}
 
+	int updateComplete()
+	{
+		return processCompleted;
+	}
+
 	int turnaroundTime;
 	int memorySize;
 	int pageSize;
@@ -205,6 +212,7 @@ class MemoryClass
 	vector<int> :: iterator it;
 	int *mainMemoryPro;
 	int *mainMemoryPge;
+	int processCompleted;
 
 };
 
@@ -218,6 +226,7 @@ int main()
     int pageSizeChoice, processAmt;
     int tempInt = 0;
     int currTime = 0;
+    int processComplete = 0;
 
     queue <int> processQ;
     MemoryClass mainMemory;
@@ -353,11 +362,11 @@ Read in all the data from the text file and then store it all into a struct
 	
 
 
-
+	processComplete = mainMemory.updateComplete();
 
 		currTime++;
 	}
-	while((processAmt != 0) && (currTime < 100001));
+	while((processAmt != processComplete) && (currTime < 100001));
    
 	double turnTime = mainMemory.getTurnTime()/8;
 	cout << "Turnaround Time: " << turnTime << endl;
