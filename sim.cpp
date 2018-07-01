@@ -10,11 +10,13 @@ public:
 	
 };
 
+
 int main()
 {
     int memorySize = 0, pageSize = 0;
     int pageSizeChoice, processAmt;
     int tempInt = 0;
+    int currTime = 0;
 
     string workloadFilename;
 
@@ -32,6 +34,11 @@ int main()
     else
         pageSize = 300;
 
+
+/*******************************************************************************************
+Read in all the data from the text file and then store it all into a struct
+
+********************************************************************************************/
     ifstream inFile(workloadFilename);
     if (inFile.is_open())
     {
@@ -39,9 +46,10 @@ int main()
         //First Integer in the file is the Number of defined Processes
     	inFile >> processAmt;
 
-    	// Create an array to store all processes information
+    	// Create an array of the struct to store all processes information
     	processes process[processAmt];
 
+    	// Load all info from txt into the struct
     	for(int i = 0; i < processAmt; i++)
     	{
     		inFile >> process[i].id >> process[i].arrivTime >> process[i].lifeTime >>process[i].memPieces;
@@ -52,11 +60,9 @@ int main()
     			inFile >> tempInt;
     			process[i].totalMem += tempInt;
     		}
-    		cout << process[i].totalMem << endl;
     	}
     	
-    	
-
+   
         inFile.close();
     }
     else
@@ -64,6 +70,20 @@ int main()
         cerr << "failed to open " << workloadFilename << " for reading!" << endl;
         return 1;
     }
+
+/*******************************************************************************************
+Memory Queue & Manager 
+Will do the processes until completed or time reaches 100,000
+********************************************************************************************/
+
+
+do 
+{
+
+currTime++;
+}
+while((processAmt != 0) && (currTime < 100001));
+
 
     return 0;
 }
