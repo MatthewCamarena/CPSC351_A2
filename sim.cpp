@@ -1,13 +1,14 @@
 #include <iostream>
 #include <fstream>
 #include <queue>
+#include <vector>
 
 using namespace std;
 
 struct processes
 {
 public: 
-	int id, arrivTime, lifeTime, memPieces, totalMem;
+	int id, arrivTime, lifeTime, memPieces, totalMem, entrdMemTime;
 	
 };
 
@@ -63,6 +64,7 @@ class MemoryClass
 
 	void insertMem(int memSize, int id)
 	{
+		
 		int proMemory = memSize;
 		int pgeCounter = 1;
 		
@@ -77,7 +79,7 @@ class MemoryClass
 					pgeCounter++;
 					proMemory -= pageSize;
 					currMemSize -= pageSize;
-
+					
 				}
 			}
 			else 
@@ -85,6 +87,24 @@ class MemoryClass
 				break;
 			}
 		}
+		
+		processInMem.push_back(id);
+
+		
+
+	}
+	void removeFromMem(int id)
+	{
+		for(int i = 0; i < pageTotal; i++)
+		{
+			if(mainMemoryPro[i] == id)
+			{
+				mainMemoryPro[i] = 0;
+				mainMemoryPge[i] = 0;
+				currMemSize += pageSize;
+			}
+		}
+
 	}
 
 	void printMemoryMap()
@@ -93,7 +113,7 @@ class MemoryClass
 
 		if (currMemSize == memorySize)
 		{
-			cout << "0-" << (memorySize-1) << ":  Free frame(s)" << endl;
+			cout << "		0-" << (memorySize-1) << ":  Free frame(s)" << endl;
 		}
 		else
 		{
@@ -107,12 +127,13 @@ class MemoryClass
 				{
 					i++;
 				}
-				while(mainMemoryPro[i+1] == 0);
-					cout << "	" << (tempIndex * pageSize) <<  "-" << (i*pageSize) << ": Free frame(s)" << endl;
+				while(mainMemoryPro[i+1] == 0 && i+1 < pageTotal);
+
+				cout << "		" << (tempIndex * pageSize) <<  "-" << (((i+1)*pageSize)-1) << ": Free frame(s)" << endl;
 			}
 			else 
 			{
-				cout << "	" << (i* pageSize) << "-" << ((i* pageSize) + pageSize - 1);
+				cout << "		" << (i* pageSize) << "-" << ((i* pageSize) + pageSize - 1);
 				cout << ": Process" << mainMemoryPro[i] << ", " << "Page " << mainMemoryPge[i] << endl;
 
 			}
@@ -122,15 +143,66 @@ class MemoryClass
 		}
 	}
 
+	
+	bool checkTime(int currTime, int processTime, int entrdTime)
+	{
+		if (currTime == (entrdTime + processTime))
+			return true;
+		else
+			return false;
+	}
+
+	void checkStatus(int currTime, processes process[])
+	{
+		
+		bool first = true;
+		
+		
+		for(it = processInMem.begin(); it != processInMem.end(); it++)
+		{
+			
+			if(checkTime(currTime, process[(*it)-1].lifeTime, process[(*it)-1].entrdMemTime))
+			{
+				
+				if (first == true)
+				{
+					cout << "t = " << currTime << ": Process " << *it << " completes" << endl;
+					cout << "Memory Map: \n";
+					removeFromMem(*it);
+					printMemoryMap();
+					cout << endl;
+					first = false;
+					
+				}
+				else 
+				{
+					cout << "		" << "Process " << *it << " completes"  << endl;
+					cout << "Memory Map: \n";
+					removeFromMem(*it);
+					printMemoryMap();
+					cout << endl;
+					removeFromMem(*it);
+				}
+			
+
+			}
+		}
+
+	}
+	
 
 	int memorySize;
 	int pageSize;
 	int pageTotal;
-	int currMemSize;
+	int currMemSize; // fix in remove
+	vector<int> processInMem;
+	vector<int> :: iterator it;
 	int *mainMemoryPro;
 	int *mainMemoryPge;
 
 };
+
+
 
 
 
@@ -241,15 +313,40 @@ Read in all the data from the text file and then store it all into a struct
 	{
 
 		//Check if room for first process in Q
-		int proSize = process[processQ.front()].totalMem;
-		if(mainMemory.checkFit(proSize))
+		
+		if(mainMemory.checkFit(process[processQ.front()].totalMem))
 		{
+			
 
-			mainMemory.insertMem(proSize, processQ.front());
-			mainMemory.printMemoryMap();
+			mainMemory.insertMem(process[processQ.front()-1].totalMem, processQ.front());
+			process[processQ.front()-1].entrdMemTime = currTime;
+
+			cout << "	MM moves Process " << processQ.front() << " to memory" << endl;
+			processQ.pop();
+			cout << "       " << "Input Queue: " << "[";
+			showQ(processQ);
+			cout << "]" << endl;
+			cout << "	Memory Map: \n";
+			mainMemory.printMemoryMap(); 
+			cout << endl;
+			
 		}
 
+
+
+
 	}
+	
+	
+	
+
+	// I need to check if a process is complete
+
+	mainMemory.checkStatus(currTime, process);
+
+	
+
+
 
 
 		currTime++;
