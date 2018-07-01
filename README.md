@@ -13,7 +13,11 @@ Patrick Myers, pmyers@csu.fullerton.edu <br />
 
 
 ## Screenshot of one Testing
-
+https://media.discordapp.net/attachments/451844031593447445/463105516823117844/unknown.png
 ## Teamwork
 We broke down the parts of the project into managable sub assignments for each team member.
-
+- Jordan Harvey created the skeleton code of the program. 
+- All worked with worked on bugfixing and making our own implementations but found ideal submission was Camarena Matthew.
+- README.md done by Jens Bernardino/Patrick Myers
+- Documentation done by Jens Bernardino/ Patrick Myers 
+- Testing done as a team for different environments MACOSx, and UBUNTO.
