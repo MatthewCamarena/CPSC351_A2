@@ -29,7 +29,7 @@ class MemoryClass
 
 	MemoryClass()
 	{
-
+		turnaroundTime = 0;
 	}
 
 	
@@ -52,6 +52,7 @@ class MemoryClass
 			mainMemoryPro[i] = 0;
 			mainMemoryPge[i] = 0;
 		}
+
 	}
 
 	bool checkFit(int neededSize)
@@ -62,7 +63,7 @@ class MemoryClass
 			return false;
 	}
 
-	void insertMem(int memSize, int id)
+	void insertMem(int memSize, int id, int currTime)
 	{
 		
 		int proMemory = memSize;
@@ -89,11 +90,11 @@ class MemoryClass
 		}
 		
 		processInMem.push_back(id);
-
+		turnaroundTime -= currTime;
 		
 
 	}
-	void removeFromMem(int id)
+	void removeFromMem(int id, int currTime)
 	{
 		for(int i = 0; i < pageTotal; i++)
 		{
@@ -104,7 +105,7 @@ class MemoryClass
 				currMemSize += pageSize;
 			}
 		}
-
+		turnaroundTime += currTime;
 	}
 
 	void printMemoryMap()
@@ -168,7 +169,7 @@ class MemoryClass
 				{
 					cout << "t = " << currTime << ": Process " << *it << " completes" << endl;
 					cout << "Memory Map: \n";
-					removeFromMem(*it);
+					removeFromMem(*it, currTime);
 					printMemoryMap();
 					cout << endl;
 					first = false;
@@ -178,10 +179,10 @@ class MemoryClass
 				{
 					cout << "		" << "Process " << *it << " completes"  << endl;
 					cout << "Memory Map: \n";
-					removeFromMem(*it);
+					removeFromMem(*it, currTime);
 					printMemoryMap();
 					cout << endl;
-					removeFromMem(*it);
+					
 				}
 			
 
@@ -190,7 +191,12 @@ class MemoryClass
 
 	}
 	
+	int getTurnTime()
+	{
+		return turnaroundTime;
+	}
 
+	int turnaroundTime;
 	int memorySize;
 	int pageSize;
 	int pageTotal;
@@ -318,7 +324,7 @@ Read in all the data from the text file and then store it all into a struct
 		{
 			
 
-			mainMemory.insertMem(process[processQ.front()-1].totalMem, processQ.front());
+			mainMemory.insertMem(process[processQ.front()-1].totalMem, processQ.front(), currTime);
 			process[processQ.front()-1].entrdMemTime = currTime;
 
 			cout << "	MM moves Process " << processQ.front() << " to memory" << endl;
@@ -353,7 +359,8 @@ Read in all the data from the text file and then store it all into a struct
 	}
 	while((processAmt != 0) && (currTime < 100001));
    
-
+	double turnTime = mainMemory.getTurnTime()/8;
+	cout << "Turnaround Time: " << turnTime << endl;
         inFile.close();
     }
 
