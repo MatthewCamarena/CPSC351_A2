@@ -12,8 +12,8 @@ Patrick Myers, pmyers@csu.fullerton.edu <br />
 ## How to run the program.
 
 1. Enter the the directory through your bash terminal to where this program's files are kept.
-2. Type make into the terminal and hit enter to execute to both compile and run the program.
-3. Enter the desired memory and page sizes.
+2. Type make into the terminal and hit enter to both compile and run the program.
+3. Enter the desired memory size, page size, and workload filename.
 
 ## Screenshot of one Testing
 <img width="471" alt="testscreenshot" src="https://user-images.githubusercontent.com/22731520/42139454-17ad9c8a-7d43-11e8-82fb-910bc1eda2fc.png"> 
@@ -21,7 +21,7 @@ Patrick Myers, pmyers@csu.fullerton.edu <br />
 ## Teamwork
 We broke down the parts of the project into managable sub assignments for each team member.
 - Jordan Harvey created the skeleton code of the program. 
-- All worked with worked on bugfixing and making our own implementations but found ideal submission was Camarena Matthew.
+- All worked on bugfixing and making their own implementations, but found that the ideal submission was Camarena Matthew's.
 - README.md done by Jens Bernardino/Patrick Myers
-- Documentation done by Jens Bernardino/ Patrick Myers 
-- Testing done as a team for different environments MACOSx, and UBUNTO.
+- Documentation done by Jens Bernardino/Patrick Myers 
+- Testing done as a team for different environments MacOSX, and Ubuntu.
