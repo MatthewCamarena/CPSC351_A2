@@ -11,6 +11,9 @@ Patrick Myers, pmyers@csu.fullerton.edu <br />
 * C++
 ## How to run the program.
 
+1. Enter the the directory through your bash terminal to where this program's files are kept.
+2. Type make into the terminal and hit enter to execute to both compile and run the program.
+3. Enter the desired memory and page sizes.
 
 ## Screenshot of one Testing
 <img width="471" alt="testscreenshot" src="https://user-images.githubusercontent.com/22731520/42139454-17ad9c8a-7d43-11e8-82fb-910bc1eda2fc.png"> 
