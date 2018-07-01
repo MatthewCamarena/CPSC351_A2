@@ -13,7 +13,7 @@ Patrick Myers, pmyers@csu.fullerton.edu <br />
 
 
 ## Screenshot of one Testing
-<img width="471" alt="testscreenshot" src="https://user-images.githubusercontent.com/22731520/42139454-17ad9c8a-7d43-11e8-82fb-910bc1eda2fc.png">
+<img width="471" alt="testscreenshot" src="https://user-images.githubusercontent.com/22731520/42139454-17ad9c8a-7d43-11e8-82fb-910bc1eda2fc.png"> 
 ## Teamwork
 We broke down the parts of the project into managable sub assignments for each team member.
 - Jordan Harvey created the skeleton code of the program. 
